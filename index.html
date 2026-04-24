@@ -127,8 +127,8 @@
         try {
           const res = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
             headers: {
-              Authorization: `token ${GIST_TOKEN}`
-            }
+              Authorization: `token ${GIST_TOKEN}`,
+            },
           });
           if (!res.ok) throw new Error("Gist Fetch Error");
           const data = await res.json();
@@ -182,7 +182,7 @@
         return (
           <div className="bg-slate-900 rounded-2xl shadow-sm border border-slate-800 overflow-hidden mb-5">
             <div
-              className={`p-4 ${color.replace('bg-', 'bg-').replace('500', '600').replace('700', '800').replace('400', '700')} text-slate-100 flex justify-between items-center`}
+              className={`p-4 ${color.replace("bg-", "bg-").replace("500", "600").replace("700", "800").replace("400", "700")} text-slate-100 flex justify-between items-center`}
             >
               <div className="flex items-center gap-2">
                 <i data-lucide={iconName} className="w-5 h-5 opacity-90"></i>
@@ -259,10 +259,10 @@
           const handleOffline = () => setIsOnline(false);
           window.addEventListener("online", handleOnline);
           window.addEventListener("offline", handleOffline);
-          
+
           loadHistory();
           if (window.lucide) window.lucide.createIcons();
-          
+
           return () => {
             window.removeEventListener("online", handleOnline);
             window.removeEventListener("offline", handleOffline);
@@ -285,7 +285,7 @@
           } else {
             finalData = await getAllFromDB();
           }
-          
+
           const sorted = finalData.sort(
             (a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion),
           );
@@ -295,12 +295,12 @@
         const saveCurrentPlan = async () => {
           setIsSaving(true);
           await saveToDB(currentPlan);
-          
+
           if (navigator.onLine) {
-             const allLocal = await getAllFromDB();
-             await pushToGist(allLocal);
+            const allLocal = await getAllFromDB();
+            await pushToGist(allLocal);
           }
-          
+
           await loadHistory();
           setTimeout(() => setIsSaving(false), 1500);
         };
@@ -347,12 +347,12 @@
           // esto podría no mostrarse, pero es funcional en archivos locales.
           if (window.confirm("¿Estás seguro de eliminar este registro?")) {
             await deleteFromDB(id);
-            
+
             if (navigator.onLine) {
-               const allLocal = await getAllFromDB();
-               await pushToGist(allLocal);
+              const allLocal = await getAllFromDB();
+              await pushToGist(allLocal);
             }
-            
+
             await loadHistory();
             if (currentPlan.id === id) {
               setCurrentPlan({
@@ -479,8 +479,12 @@
                     FINANZAS BRIAN
                   </h1>
                   <div className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full animate-pulse ${isOnline ? "bg-emerald-500" : "bg-amber-500"}`}></span>
-                    <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${isOnline ? "text-emerald-500/80" : "text-amber-500/80"}`}>
+                    <span
+                      className={`w-2 h-2 rounded-full animate-pulse ${isOnline ? "bg-emerald-500" : "bg-amber-500"}`}
+                    ></span>
+                    <p
+                      className={`text-[10px] font-bold uppercase tracking-[0.2em] ${isOnline ? "text-emerald-500/80" : "text-amber-500/80"}`}
+                    >
                       {isOnline ? "Gist Cloud Sync" : "Modo Offline"}
                     </p>
                   </div>
@@ -524,7 +528,6 @@
               </div>
             </header>
 
-            {/* Dashboard Grid - 2x2 en mobile, 1x4 en desktop */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
               <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800 shadow-sm">
                 <p className="text-[10px] font-bold text-slate-500 uppercase mb-1 tracking-wider">
